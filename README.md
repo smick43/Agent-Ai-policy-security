@@ -1,55 +1,55 @@
 # Agent AI Policy Security
 
-A demonstration of AI agent security boundaries, prompt isolation, and the risks of unsafe tool exposure in multi-tenant agent systems.
+Security-focused demonstration of agent boundary enforcement, policy isolation, and unsafe tool exposure in multi-tenant AI systems.
 
-This project explores how an agent may be constrained by policy and how a malicious user can attempt to bypass those constraints when tool access is overly permissive.
+This project illustrates how an AI agent can be constrained by policy and how a malicious actor may attempt to bypass those controls when tool access is overly permissive.
 
 ## Overview
 
 The repository contains two server variants:
 
-- A secure agent server that enforces user-scoped file access and prompt guardrails.
-- A vulnerable agent server that demonstrates a realistic policy bypass scenario.
+- A secure agent server that enforces user-scoped file access and policy guardrails.
+- A vulnerable agent server that demonstrates a realistic bypass scenario.
 
-The goal is to provide a clear, practical example of:
+The objective is to provide a practical example of:
 
 - agent tool design
 - policy enforcement in LLM-based systems
 - multi-user isolation
 - unsafe tool argument handling
-- attack surfaces in AI agent environments
+- attack surfaces in autonomous agent environments
 
 ## Architecture
 
 ### Secure Server
 
-The `agent_server.py` implementation simulates a file-management assistant for multiple users. It uses:
+The `agent_server.py` implementation models a file-management assistant for multiple users. It applies:
 
-- a system prompt that defines user isolation rules
-- tool calls that allow file reads only within the authenticated user's workspace
-- a restricted storage model to demonstrate proper access boundaries
+- a system prompt that defines access boundaries
+- file tools restricted to the authenticated user's workspace
+- a constrained storage model to enforce isolation
 
 ### Vulnerable Server
 
-The `agent_vuln.py` implementation demonstrates the same concept without strict access control. It allows the model to act on user-supplied identifiers and exposes the system to path traversal and unauthorized file access.
+The `agent_vuln.py` implementation demonstrates the same functionality without strict enforcement. It allows the model to operate on user-controlled identifiers and exposes the system to path traversal and unauthorized access.
 
 ### Attack Simulation
 
-The `attacker.py` script simulates adversarial behavior intended to bypass the agent's intended policy and access files outside the current user's scope.
+The `attacker.py` script simulates adversarial behavior designed to bypass the agent's intended policy and access files outside the current user's scope.
 
 ## Files
 
 - `agent_server.py` — secure multi-tenant agent server
-- `agent_vuln.py` — intentionally vulnerable server for comparison
+- `agent_vuln.py` — intentionally vulnerable comparison server
 - `attacker.py` — demonstration attack client
-- `user.py` — normal client used to interact with the agent
+- `user.py` — standard client for legitimate interaction
 - `README.md` — project documentation
 
-## Prerequisites
+## Requirements
 
 - Python 3.10+
-- An API key for OpenRouter
-- Required Python packages:
+- OpenRouter API key
+- Required packages:
 
 ```bash
 pip install fastapi uvicorn websockets openai python-dotenv
@@ -57,7 +57,7 @@ pip install fastapi uvicorn websockets openai python-dotenv
 
 ## Environment Setup
 
-Set your API key before running the project:
+Set the API key before launching the project:
 
 ```powershell
 $env:OPENROUTER_API_KEY="YOUR-API-KEY-HERE"
@@ -69,19 +69,19 @@ Or in a Unix-like shell:
 export OPENROUTER_API_KEY="YOUR-API-KEY-HERE"
 ```
 
-## Running the Secure Server
+## Run the Secure Server
 
 ```bash
 python agent_server.py
 ```
 
-Then start a normal user client:
+Then start a standard user client:
 
 ```bash
 python user.py
 ```
 
-## Running the Vulnerable Server
+## Run the Vulnerable Server
 
 ```bash
 python agent_vuln.py
@@ -93,47 +93,47 @@ Then start the client again:
 python user.py
 ```
 
-## Attack Demo
+## Attack Demonstration
 
-To simulate an adversarial attempt to bypass agent restrictions:
+To simulate a policy bypass attempt:
 
 ```bash
 python attacker.py
 ```
 
-## Security Lessons
+## Security Principles
 
-This project highlights several important principles for AI security:
+This project highlights several core security practices:
 
 - Never trust model-generated arguments when they influence filesystem access.
 - Enforce access control outside the LLM decision layer.
 - Treat tool schemas as privileged interfaces, not user-controlled instructions.
-- Validate all file paths against a strict, expected workspace.
-- Use separation of duties between model reasoning and system-level enforcement.
+- Validate all file paths against a strict workspace boundary.
+- Separate reasoning from system-level enforcement.
 
 ## Use Case
 
-This repository is useful for learning, demonstration, and research into:
+This repository is intended for learning, demonstration, and research in:
 
 - LLM security evaluation
 - agent policy enforcement
 - prompt injection resistance
 - secure tool design for AI systems
 
-## Future Improvements
+## Future Enhancements
 
 Potential extensions include:
 
 - role-based access control
-- audit logging for all agent tool calls
-- whitelisting for allowed file types
+- audit logging for all tool invocations
+- allowlisting for safe file types
 - sandboxed execution environments
-- stronger policy evaluation and monitoring
+- stronger monitoring and policy evaluation
 
 ## License
 
-This project is intended for educational and security-research purposes.
+This project is intended for educational and security-research use.
 
-## Professional Note
+## Note
 
-This repository is a strong example of AI safety research and can be presented as a practical security-focused system demonstrating how to reason about policy boundaries in autonomous agents.
+This repository functions as a practical security reference for evaluating policy boundaries in autonomous systems and demonstrates how access control must be enforced at the system layer rather than delegated to the model.
